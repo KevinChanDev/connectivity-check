@@ -34,7 +34,7 @@
             }
 
             getRequestBtn.addEventListener('click', () => {
-                fetch('http://localhost:6464/')
+                fetch('https://localhost:6464/')
                     .then(response => {
                         if (!response.ok) {
                             throw new Error(`HTTP error! status: ${response.status}`);
