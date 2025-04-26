@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GET Request with Parameter</title>
+</head>
+<body>
+    <h1>Make a GET Request to http://localhost</h1>
+    <button id="getRequestBtn">Send GET Request</button>
+    <h2 id="valueDisplay"></h2>
+    <div id="responseContainer"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const getRequestBtn = document.getElementById('getRequestBtn');
+            const responseContainer = document.getElementById('responseContainer');
+            const valueDisplay = document.getElementById('valueDisplay');
+
+            // Function to get the value of a specific parameter from the URL
+            function getQueryParam(name) {
+                const urlSearchParams = new URLSearchParams(window.location.search);
+                return urlSearchParams.get(name);
+            }
+
+            // Get the value of the 'value' parameter from the URL
+            const valueParam = getQueryParam('value');
+
+            // Set the text content of the h2 tag
+            if (valueParam) {
+                valueDisplay.textContent = valueParam;
+            } else {
+                valueDisplay.textContent = 'No "value" parameter found.';
+            }
+
+            getRequestBtn.addEventListener('click', () => {
+                fetch('http://localhost:6464/')
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.text(); // Or response.json() if the server returns JSON
+                    })
+                    .then(data => {
+                        responseContainer.textContent = `Response: ${data}`;
+                    })
+                    .catch(error => {
+                        responseContainer.textContent = `Error: ${error}`;
+                    });
+            });
+        });
+    </script>
+</body>
+</html>
